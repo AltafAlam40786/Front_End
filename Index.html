@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Boilerplate with Import</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        
+        /* Just some styling to show where the external file goes */
+        #target-div {
+            border: 2px dashed #333;
+            padding: 20px;
+            background-color: #f9f9f9;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Main Index File</h1>
+    <p>Below is the div where the external file will appear:</p>
+
+    <div id="target-div">
+        Loading content...
+    </div>
+
+    <script>
+        // Function to load the external HTML file
+        async function loadContent() {
+            try {
+                // Fetch the file from the folder
+                const response = await fetch('pages/content.html');
+                
+                // Check if file exists
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Get the text content
+                const html = await response.text();
+
+                // Inject it into the div
+                document.getElementById('target-div').innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading file:', error);
+                document.getElementById('target-div').innerHTML = '<p>Error loading content.</p>';
+            }
+        }
+
+        // Run the function when the page loads
+        window.onload = loadContent;
+    </script>
+
+</body>
+</html>
